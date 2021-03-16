@@ -1,6 +1,6 @@
 # Assembly_Codes
 
-Run Assembly on Linux :-
+<h2>Run Assembly on Linux :- </h2>
 
 1. Get 'nasm' assembler.
 
@@ -16,7 +16,7 @@ Run Assembly on Linux :-
    
 
 
-On Arch Linux x64 :-
+<h2>On Arch Linux x64 :-</h2>
 
 <code>sudo pacman -S nasm</code>
 

@@ -18,10 +18,10 @@ Run Assembly on Linux :-
 
 On Arch Linux x64 :-
 
-1. sudo pacman -S nasm
+<addr>sudo pacman -S nasm
 
-2. nasm -f elf64 -o example.o example.asm
+   nasm -f elf64 -o example.o example.asm
 
-3. ld example.o -o example
+   ld example.o -o example
 
-4. ./example
+   example

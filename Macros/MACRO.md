@@ -2,9 +2,9 @@ Macro: Macro can be used for replacement of heavy blocks of code with single lin
 
 Macro Declaration:- 
 
-%macro {macroName} {No of macro arguments}
-    {statements to be executed} 
-%endmacro    
+    %macro {macroName} {No of macro arguments}
+        {statements to be executed} 
+    %endmacro    
 
 Macro Call:-
 

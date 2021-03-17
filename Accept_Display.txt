@@ -1,0 +1,34 @@
+section .data
+    
+%macro print 2
+    mov rax,1
+    mov rdi,1
+    mov rsi,%1
+    mov rdx,%2
+    syscall
+%endmacro
+
+%macro read 2    ; Read macro used to accept 2 digit number %macro {macro_name} {no. of arguments macro accepted }
+    mov rax,0	 ; opcode 0 is used to accept or read opertion
+    mov rdi,0	 ; STD::OUT console 
+    mov rsi,%1	 ; First argument address
+    mov rdx,%2	 ; Second argument address
+    syscall
+%endmacro        ;End of macro
+
+%macro exit 0    ;Exit macro to stop the execution of progrmme
+    mov rax,60   
+    mov rdi,0
+    syscall
+%endmacro
+
+section .bss
+name resb 2
+
+section .text
+    global _start
+
+_start:
+    read name,2
+    print name,2
+    exit

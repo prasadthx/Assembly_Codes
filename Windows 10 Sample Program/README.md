@@ -13,7 +13,7 @@ Check with command:-
 
 <code>clang --version</code>
 
-<img src="./Screenshot (353).png">
+<img src="./Screenshot (361).png">
 
 <h2> Write your Assembly code </h2>
 Write your assembly language code with respect to the Windows OS and 64-bit architecture.
@@ -26,15 +26,15 @@ Here win64 is the type for Windows 64-bit OS.
 Object file name can be anything that you want.
 The .win64 object file extension is for the objects in Windows 64-bit.
 
-<img src="./Screenshot (354).png">
+<img src="./Screenshot (362).png">
 
 <h2> Use Clang compiler to compile the code </h2>
 
 <code>clang hello_program.win64 -o hello_program_executable.exe</code>
 
-<img src="./Screenshot (354).png">
+<img src="./Screenshot (363).png">
 
 <h2> Execute the Code </h2>
 
 <code>hello_program_executable</code>
-<img src="./Screenshot (355).png">
+<img src="./Screenshot (364).png">

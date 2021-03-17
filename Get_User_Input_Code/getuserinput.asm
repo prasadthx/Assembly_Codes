@@ -1,7 +1,8 @@
 section .data
-    text1 db "Enter your name: ",0ah
-    text2 db "Hello, "
+    text1 db "What is your name? "
     text1_len equ $-text1
+
+    text2 db "Hello, "
     text2_len equ $-text2
 
 %macro print 2
@@ -12,11 +13,11 @@ section .data
     syscall
 %endmacro
 
-%macro input 0
+%macro input 2
     mov rax, 0
     mov rdi, 0
-    mov rsi, name
-    mov rdx, 16
+    mov rsi, %1
+    mov rdx, %2
     syscall
 %endmacro
 
@@ -36,10 +37,9 @@ section .text
 _start:
  
     print text1, text1_len
-    input
+    input name, 16
     print text2, text2_len
     print name, 16
  
     exit
  
-

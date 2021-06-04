@@ -20,6 +20,9 @@ msg3_len equ $-msg3
 msg4 db "Equivalent BCD number: ", 0ah
 msg4_len equ $-msg4
 
+newline db 0ah
+newline_len equ $-newline
+
 %macro print 2
     mov rax, 1
     mov rdi, 1
@@ -73,16 +76,18 @@ _start:
     je bcdToHEX
 
     cmp byte[choice], '3'
-    jae exit
+    je exit
+
+    exit
 
 
 hexToBCD:
     
     print msg1, msg1_len
 
-    input number, 17
+    input number, 5
 
-    call asciiHexToHEX
+    call asciiToHex
 
     mov rax, rbx
     mov rbx, 10
@@ -99,30 +104,75 @@ hexToBCD:
 
     print msg4, msg4_len   
     print number, 16
+    print newline, newline_len
 
-    jmp _start 
-
-asciiHexToHEX:
-    mov rsi, number
-    mov rcx, 16
-    mov rbx, 0
-    mov rax, 0
-
-    loop1: 
-        rol rbx, 4
-        mov al, [rsi]
-        cmp al, 39h
-        jmp skip
-        sub al, 7h
-    skip: 
-        sub al, 30h
-        add rbx, rax
-        inc rsi  
-        dec rcx
-        jnz loop1
-    ret      
+jmp _start 
 
 bcdToHEX: 
-    exit
+    print msg2, msg2_len
+    
+    input number, 6
+
+    mov rbp, 5
+    mov rsi, number
+    mov rbx, 10
+    mov rax, 0
+
+    bcdToValue:
+            mov cx, 0
+            mul bx
+            mov cl, [rsi]
+            sub cl, 30h
+            add ax, cx
+            inc rsi
+            dec rbp 
+            jnz bcdToValue
+
+    mov [factor], ax
+    print msg3, msg3_len
+
+    mov rax, [factor]
+    call display 
+    jmp _start
+
+asciiToHex:
+    	mov rsi, number
+    	mov rcx, 4
+    	mov rbx, 0  
+        mov rax, 0   
+    alphabet:	
+        shl rbx, 4    
+    	mov al, [rsi] 
+    	cmp al, 39h   
+    	jbe num    
+    	sub al, 07h   
+    num:	
+        sub al, 30h   
+    	add bl, al  
+    	inc rsi      
+    	dec rcx      
+    	jnz alphabet
+ret	
+
+display:
+        mov rdi, answer+3
+        mov rcx,4  
+        mov rbx,16  
+    alphabet2:	
+        mov rdx, 0
+        div rbx              
+        cmp dl,09h           
+        jbe add30            
+        add dl,07h          
+    add30:	
+        add dl,30h           
+        mov [rdi],dl
+        dec rdi              
+        dec rcx            
+        jnz alphabet2
+        print answer, 16
+ret
+
+
 
 ;nasm -f elf64 -o hexToBCD_VV.o hexToBCD_VV.asm && ld hexToBCD_VV.o -o hexToBCD && ./hexToBCD    

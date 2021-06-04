@@ -39,48 +39,52 @@ section .data
     syscall
 %endmacro
 
-;---------------------------------------------------------------------------
+;----------------------------------------------------------------------
 
 section .bss 
 
 char_ans resb 2
 
-;---------------------------------------------------------------------------
+;----------------------------------------------------------------------
 
 section .text
 
 global _start
 
 _start:
-        
-        print msg1,msg1_len
-        mov rsi,sblock
-        call block_display
-        
-        print msg2,msg2_len
-        mov rsi , dblock
-        call block_display
-        
-        call block_transfer
-        
-        print msg1,msg1_len
-        mov rsi,sblock
-        call block_display
-            
-        print msg2,msg2_len
-        mov rsi,dblock
-        call block_display
-
-        exit
+    
+    print msg1,msg1_len
+    mov rsi,sblock
+    call block_display
+    
+    print msg2,msg2_len
+    mov rsi , dblock
+    call block_display
+    
+    call block_transfer
+    
+    print msg1,msg1_len
+    mov rsi,sblock
+    call block_display
+    
+    print msg2,msg2_len
+    mov rsi,dblock
+    call block_display
                     
+    exit 
+    
 block_transfer:
     mov rsi,sblock
     mov rdi,dblock
     mov rcx,7
     proc_:
-        cld
-        rep movsb 
-    ret
+        mov al,[rsi]
+        mov [rdi],al
+        inc rsi
+        inc rdi
+        dec rcx
+        jnz proc_
+ret
 
 block_display:
     mov rbp,7
@@ -98,17 +102,18 @@ ret
 
 
 display: 
-    mov rbx,16
-    mov rcx,2
-    mov rsi,char_ans+1
-    back:
+   mov rbx,16
+   mov rcx,2
+   mov rsi,char_ans+1
+   back:
         mov rdx,0
         div rbx  			; rax/rbx  o/p -> rdx ->remainder rax->quotient
         
         cmp dl,09h
         jbe add30
         add dl,07h
-    add30:
+  
+   add30:
         add dl,30h
         mov [rsi],dl
         dec rsi
@@ -118,5 +123,4 @@ display:
     ret
 
 
-
-;nasm -f elf64 -o nonOverlapped.o nonOverlapped.asm && ld nonOverlapped.o -o nonOverlapped && ./nonOverlapped
+;nasm -f elf64 -o nonOverlappedWithoutString.o nonOverlappedWithoutString.asm && ld nonOverlappedWithoutString.o -o nonOverlappedWithoutString && ./nonOverlappedWithoutString

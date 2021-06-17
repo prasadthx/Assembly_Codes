@@ -64,10 +64,9 @@ _start:
     print msg3, msg3_len
  
     mov rax, [count]
-    mov rsi,dispnum + 1           ;rsi points to 16th location of dispnum
+    mov rsi,dispnum + 1           ;rsi points to 2nd location of dispnum
     mov rax,[count]             ;rax now stores value of count
-    mov rcx,2                   ;rcx gets initiaised with 16
-    dec rax                     ;decrement the value of rax
+    mov rcx,2                   ;rcx gets initiaised with 2
 
     counter:                        ;counter label
         mov rdx,0                   ;rdx gets initiaised with 0
